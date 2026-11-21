@@ -46,3 +46,10 @@ use `check()` if you want the raise instead of the number.
 All three functions accept a `clock` keyword.  It exists so tests can pass a
 fake clock and so callers with a different monotonic source can supply one;
 the default is `time.monotonic`.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
